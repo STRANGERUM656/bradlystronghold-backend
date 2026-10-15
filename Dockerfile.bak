@@ -1,0 +1,33 @@
+# ============================================================
+# STAGE 1: Builder (installa tutte le dipendenze)
+# ============================================================
+FROM node:24-alpine AS builder
+
+WORKDIR /app
+
+# Copia i file di dipendenza
+COPY package*.json ./
+
+# Installa TUTTE le dipendenze (incluso dev) per il build
+RUN npm install
+
+# Copia il resto del codice
+COPY . .
+
+# ============================================================
+# STAGE 2: Production (solo dipendenze di produzione)
+# ============================================================
+FROM node:24-alpine AS production
+
+WORKDIR /app
+
+# Copia solo i file necessari dal builder
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/server.js ./
+
+# Espone la porta (Rivet la sovrascrive con RIVET_PORT)
+EXPOSE 3000
+
+# Avvia il server
+CMD ["node", "server.js"]

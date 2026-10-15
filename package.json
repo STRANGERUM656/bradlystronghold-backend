@@ -1,0 +1,15 @@
+{
+  "name": "bradlystronghold-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@rivetkit/rivetkit-napi-win32-x64-msvc": "^2.3.27",
+    "@rivetkit/rivetkit-native-win32-x64-msvc": "^2.2.1-pr.4600.eda2ade",
+    "rivetkit": "^2.1.5",
+    "undici": "^8.12.2"
+  }
+}
